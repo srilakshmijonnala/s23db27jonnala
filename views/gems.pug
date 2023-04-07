@@ -1,0 +1,18 @@
+extends layout
+block content
+  h1= title
+  - let results = [{LapisLazuu:35, RedJasper:45, opal :95},{LapisLazuu:15 , RedJasper:30, opal:20},{LapisLazuu:80 , RedJasper:50, opal:25}]
+  div(class="container-fluid mt-3")
+  div(class="row")
+    each temp,index in results
+        div(class="col-sm-2" )  #{temp.LapisLazuu} -  #{temp.RedJasper} - #{temp.opal}
+  br
+  div(class="container-fluid")
+    div(class="row")
+    - for(var i=0;i<results.length;i++) {
+        div(class="col-sm-2" width="215px" onClick=`buy(${i+1})`) #{results[i].LapisLazuu}
+    -}
+  script. 
+    function buy(indexNum) {
+      alert(`You purchased item ${indexNum}`);
+    }
