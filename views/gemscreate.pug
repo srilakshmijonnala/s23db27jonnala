@@ -1,0 +1,28 @@
+extends layout
+block content
+ h1= title
+ form(id='gemsForm', action="/resource/gemss", method="POST")
+  div.form-group
+   label.gemsAttr(for='gems_color') gems color
+   input#gems_color(type='text', name='gems_color')
+  div.form-group
+   label.gemsAttr(for='gems_breed') gems Brand 
+   input#gems_breed(type='text', name='gems_breed')
+  div.form-group
+   label.gemsAttr(for='gems_price') gems price 
+   input#gems_price(type='text', name='gems_price')
+  input(type="submit")
+ script.
+  document.forms['gemsForm'].addEventListener('submit', (event) => {
+    event.preventDefault();
+    fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) 
+    }).then((resp) => {
+        return resp.json();
+    }).then((body) => {
+        alert("Save succeded")
+    }).catch((error) => {
+        alert("Save failed " + error )
+    });
+   });

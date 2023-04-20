@@ -2,13 +2,24 @@ extends layout
 
 block content
   h1= title
-  - let items=results
-  div(class="container-fluid")
-  div(class="row")
-  each value,index in items
-    div(class="col-sm-2" onclick=`buy(${index})`)  #{value.gems_color} Gems Breed  #{value.gems_breed}, price #{value.gems_price}
-  script. 
-    function buy(index)
-    {
-      alert(`You purchased Item ${index+1}`)
-    } 
+  //- - let items = ['gems_color','gems_breed','gems_price']
+  - let items = results;
+  - let o;
+  script.
+    function buy(x){
+      alert('purchased item ' + x)
+   } 
+  div(class='container-fluid')
+    div(class='row m-1')
+    div(class="row row-cols-1 row-cols-sm-4 g-6")
+      each item,index in items
+        - let details = `dispatch(\"/gems/detail?id=${item._id}\")` 
+      
+        div(class="card text-white bg-dark mb-3" class='col' class='card' class='card-body' class='card-text' onclick='buy('+index+')') Item #{item.gems_color}(#{item.gems_breed})is #{item.gems_price} 
+          <br><br>
+          span(class="btn btn-info", onclick= details) Details
+
+  script.
+    function dispatch(path){
+      window.location.href=path
+    }

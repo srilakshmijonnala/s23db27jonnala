@@ -11,7 +11,7 @@ exports.gems_list = async function(req, res) {
     }
    };
 
-// for a specific Costume.
+// for a specific gems.
 exports.gems_detail = async function(req, res) {
     console.log("detail" + req.params.id)
     try {
@@ -47,7 +47,7 @@ exports.gems_create_post = async function(req, res) {
 exports.gems_delete = function(req, res) {
  res.send('NOT IMPLEMENTED: gems delete DELETE ' + req.params.id);
 };
-// Handle Costume update form on PUT.
+// Handle gems update form on PUT.
 exports.gems_update_put = async function(req, res) {
  console.log(`update on id ${req.params.id} with body
 ${JSON.stringify(req.body)}`)
@@ -77,4 +77,64 @@ exports.gems_view_all_Page = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
    };
+   // Handle gems delete on DELETE.
+exports.gems_delete = async function(req, res) {
+console.log("delete " + req.params.id)
+try {
+result = await gems.findByIdAndDelete( req.params.id)
+console.log("Removed " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": Error deleting ${err}}`);
+}
+};
+// Handle a show one view with id specified by query
+exports.gems_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await gems.findById( req.query.id)
+    res.render('gemsdetail',
+    { title: 'gems Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+    exports.gems_create_Page = function (req, res) {
+        console.log("create view")
+        try {
+            res.render('gemscreate', { title: 'gems Create' });
+        }
+        catch (err) {
+            res.status(500)
+            res.send(`{'error': '${err}'}`);
+        }
+    };
+
+    exports.gems_update_Page = async function(req, res) {
+        console.log("update view for item "+req.query.id)
+        try{
+        let result = await gems.findById(req.query.id)
+        res.render('gemsupdate', { title: 'gems Update', toShow: result });
+        }
+        catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+        }
+        };
+        exports.gems_delete_Page = async function(req, res) {
+            console.log("Delete view for id " + req.query.id)
+            try{
+            result = await gems.findById(req.query.id)
+            res.render('gemsdelete', { title: 'gems Delete', toShow:
+            result });
+            }
+            catch(err){
+            res.status(500)
+            res.send(`{'error': '${err}'}`);
+            }
+            };
+
    

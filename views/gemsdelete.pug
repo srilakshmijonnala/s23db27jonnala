@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  h1= title
+
+  if(toShow == null)
+    h2 No instance to delete
+  else
+    - let gemsid = toShow._id
+    - let gems_color = toShow.gems_color
+    - let gems_breed = toShow.gems_breed
+    - let gems_price = toShow.gems_price
+    - let actionid = "/resource/gemss/" + gemsid
+    script let actionid = "#{actionid}"
+    div
+     div.row 
+      div(class='gemsAttr mr-3') gems ID is:
+      div #{gemsid}
+     div.row
+      div(class='gemsAttr mr-3') gems color is:
+      div #{gems_color}
+     div.row
+      div(class='gemsAttr mr-3') gems breed is:
+      div #{gems_breed}
+     div.row
+      div(class='gemsAttr mr-3') gems Price is:
+      div #{gems_price}
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+  script.
+   function cancel() {
+    window.location.href='/gemss'
+    }
+  script.
+    function deleteOnid() {
+     console.log("starting delete")
+     fetch(actionid, {
+      method: 'DELETE'
+     }).then((resp) => {
+        return resp.json();
+     }).then((body) => {
+        alert("Delete succeded")
+        window.location.href='/gems'
+     }).catch((error) => {
+        alert("Delete failed " + error )
+     });
+    }

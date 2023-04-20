@@ -1,0 +1,27 @@
+extends layout
+
+block content
+ h1= title
+
+  if(toShow == null)
+    h2 No instance to detail
+  else
+    - let gemsid = toShow._id
+    - let gems_color = toShow.gems_color
+    - let gems_breed = toShow.gems_breed 
+    - let gems_price = toShow.gems_price
+    - let actionid = "/resource/gems/" + gemsid
+    script let actionid = "#{actionid}"
+    div
+    div.row
+    div(class='gemsAttr mr-3') gems ID is: 
+       div #{gemsid}
+    div.row
+    div(class='gemsAttr mr-3') gems color is: 
+       div #{gems_color}
+    div.row
+    div(class='gemsAttr mr-3') gems breed is: 
+       div #{gems_breed}
+    div.row
+    div(class='gemsAttr mr-3') gems price is:
+      div #{gems_price}
