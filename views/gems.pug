@@ -2,7 +2,6 @@ extends layout
 
 block content
   h1= title
-  //- - let items = ['gems_color','gems_breed','gems_price']
   - let items = results;
   - let o;
   script.
@@ -13,11 +12,12 @@ block content
     div(class='row m-1')
     div(class="row row-cols-1 row-cols-sm-4 g-6")
       each item,index in items
-        - let details = `dispatch(\"/gems/detail?id=${item._id}\")` 
+        - let destination = `dispatch(\"/gems/update?id=${item._id}\")`
       
         div(class="card text-white bg-dark mb-3" class='col' class='card' class='card-body' class='card-text' onclick='buy('+index+')') Item #{item.gems_color}(#{item.gems_breed})is #{item.gems_price} 
-          <br><br>
-          span(class="btn btn-info", onclick= details) Details
+
+          <br>
+          button.btn( class="btn-success ml-1", onclick= destination) Update
 
   script.
     function dispatch(path){
