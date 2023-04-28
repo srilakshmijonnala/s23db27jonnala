@@ -1,25 +1,33 @@
+//- extends layout
+
+//- block content
+//-   h1= title
+//-   - let items=results
+//-   - let destinationcreate = `dispatch(\"/gems/create\")`
+//-    button.btn( class="btn-primary ml-1", onclick= destinationcreate) Create
+//-   div(class="container-fluid")
+//-     div(class="row m-1")
+//-      each item in items
+//-       - let destination = `dispatch(\"/gems/update?id=${item._id}\")`
+//-       - let destinationdelete = `dispatch(\"/gems/delete?id=${item._id}\")`
+//-       - let destinationdetail = `dispatch(\"/gems/detail?id=${item._id}\")`
+//-       div(class="row-sm-2", class="m-1") Glass #{item.gems_color} quantity (#{item.gems_breed}) is #{item.gems_price}
+//-        button.btn( class="btn-primary ml-1", onclick= destination) Update
+//-        button.btn( class="btn-primary ml-1", onclick= destinationdelete) Delete
+//-        button.btn( class="btn-primary ml-1", onclick= destinationdetail) Detail
+//-   script. 
+//-    function dispatch(path){
+//-     window.location.href=path}
+
 extends layout
-
 block content
-  h1= title
-  - let items = results;
-  - let o;
-  script.
-    function buy(x){
-      alert('purchased item ' + x)
-   } 
-  div(class='container-fluid')
-    div(class='row m-1')
-    div(class="row row-cols-1 row-cols-sm-4 g-6")
-      each item,index in items
-        - let destination = `dispatch(\"/gems/update?id=${item._id}\")`
-      
-        div(class="card text-white bg-dark mb-3" class='col' class='card' class='card-body' class='card-text' onclick='buy('+index+')') Item #{item.gems_color}(#{item.gems_breed})is #{item.gems_price} 
+ h1= title
+ - let items = results;
+ div(class="container-fluid")
+  div(class="row")
+   each item in items ? items : []
+    div(class="row-sm-2", class="m-1") Item #{item.gems_color}(#{item.gems_breed}) is #{item.gems_price}
 
-          <br>
-          button.btn( class="btn-success ml-1", onclick= destination) Update
-
-  script.
-    function dispatch(path){
-      window.location.href=path
-    }
+ script.
+  function dispatch(path){
+  window.location.href=path}

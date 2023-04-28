@@ -5,9 +5,23 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//   Account.findOne({ username: username }, function (err, user) {
+//   if (err) { return done(err); }
+//   if (!user) {
+//   return done(null, false, { message: 'Incorrect username.' });
+//   }
+//   if (!user.validPassword(password)) {
+//   return done(null, false, { message: 'Incorrect password.' });
+//   }
+//   return done(null, user);
+//   });
+//   }));
 passport.use(new LocalStrategy(
   function(username, password, done) {
-  Account.findOne({ username: username }, function (err, user) {
+  Account.findOne({ username: username })
+  .then(function (user){
   if (err) { return done(err); }
   if (!user) {
   return done(null, false, { message: 'Incorrect username.' });
@@ -16,8 +30,12 @@ passport.use(new LocalStrategy(
   return done(null, false, { message: 'Incorrect password.' });
   }
   return done(null, user);
-  });
-  }));
+  })
+  .catch(function(err){
+  return done(err)
+  })
+  })
+ )
   
    var Account =require(('./models/account'));
 passport.use(new LocalStrategy(Account.authenticate()));
@@ -25,8 +43,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 require('dotenv').config();
-const connectionString =
-process.env.MONGO_CON
+const connectionString =process.env.MONGO_CON
 mongoose = require('mongoose');
 mongoose.connect(connectionString,
 {useNewUrlParser: true,
@@ -52,11 +69,11 @@ async function recreateDB(){
   // Delete everything
 await gems.deleteMany();
   let instance1 = new
-  gems({gems_color:"brown",gems_breed:"German Shepherd",gems_price:2000});
+  gems({gems_color:"brown",gems_breed:"German Shepherd",gems_price:200});
   let instance2 = new
-  gems({gems_color:"white",gems_breed:"Labrador Retriever",gems_price:1500});
+  gems({gems_color:"white",gems_breed:"Labrador Retriever",gems_price:100});
   let instance3 = new
-  gems({gems_color:"black",gems_breed:"Poodle",gems_price:4080});
+  gems({gems_color:"black",gems_breed:"Poodle",gems_price:480});
   instance1.save().then(doc=>{
   console.log("First object saved")}
   ).catch(err=>{
